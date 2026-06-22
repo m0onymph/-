@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🌌</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    background:linear-gradient(
+    to bottom,
+    #050816,
+    #111c3d
+    );
+
+    height:100vh;
+    overflow:hidden;
+
+    font-family:Georgia, serif;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    color:white;
+}
+
+.estrella{
+
+    position:absolute;
+
+    color:white;
+
+    cursor:pointer;
+
+    animation:
+    brillar 3s infinite,
+    flotar 20s ease-in-out infinite alternate;
+}
+
+@keyframes brillar{
+
+    0%{opacity:.2;}
+    50%{opacity:1;}
+    100%{opacity:.2;}
+
+}
+
+@keyframes flotar{
+
+    from{
+        transform:translateY(0);
+    }
+
+    to{
+        transform:translateY(-30px);
+    }
+
+}
+
+.inicio{
+
+    text-align:center;
+    z-index:5;
+}
+
+h1{
+
+    margin-bottom:30px;
+    font-size:2rem;
+    font-weight:normal;
+}
+
+.botonEstrella{
+
+    background:none;
+    border:none;
+    color:white;
+    font-size:2.5rem;
+    cursor:pointer;
+
+    animation:brillar 3s infinite;
+
+    transition:.3s;
+}
+
+.botonEstrella:hover{
+
+    transform:scale(1.3);
+}
+
+.susurro{
+
+    margin-top:10px;
+
+    opacity:.6;
+
+    font-style:italic;
+
+    font-size:1rem;
+}
+
+.secreto{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.92);
+
+    justify-content:center;
+    align-items:center;
+
+    padding:20px;
+}
+
+.tarjeta{
+
+    max-width:800px;
+
+    text-align:center;
+}
+
+#texto{
+
+    white-space:pre-line;
+
+    font-size:1.3rem;
+
+    line-height:2;
+
+    margin-top:30px;
+
+    padding:20px;
+}
+
+.musica{
+
+    margin-bottom:25px;
+}
+
+.musica button{
+
+    background:none;
+    border:1px solid rgba(255,255,255,.5);
+
+    color:white;
+
+    padding:10px 20px;
+
+    border-radius:30px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.musica button:hover{
+
+    background:rgba(255,255,255,.1);
+}
+
+.mensajeEstrella{
+
+    position:fixed;
+
+    background:white;
+
+    color:black;
+
+    padding:10px 15px;
+
+    border-radius:15px;
+
+    display:none;
+
+    z-index:999;
+
+    pointer-events:none;
+}
+
+@media(max-width:768px){
+
+    h1{
+        font-size:1.6rem;
+    }
+
+    #texto{
+        font-size:1.1rem;
+        line-height:1.8;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="inicio">
+
+    <h1></h1>
+
+    <button class="botonEstrella"
+    onclick="abrirSecreto()">
+        ✦
+    </button>
+
+    <p class="susurro">
+        toca la estrella
+    </p>
+
+</div>
+
+<div id="secreto" class="secreto">
+
+    <div class="tarjeta">
+
+        <div class="musica">
+
+            <button
+            onclick="document.getElementById('musica').play()">
+
+                🎵 Escuchar mientras lees
+
+            </button>
+
+            <audio id="musica">
+
+                <source
+                src="Beloved Mirage(MP3_160K).mp3"
+                type="audio/mpeg">
+
+            </audio>
+
+        </div>
+
+        <div id="texto"></div>
+
+    </div>
+
+</div>
+
+<div
+id="mensajeEstrella"
+class="mensajeEstrella">
+</div>
+
+<script>
+
+const mensajes = [
+
+"te amo ❤️",
+"te amooo demasiado",
+"gracias por existir ❤️",
+"volvería a elegirte 💕",
+"te amooo ❤️",
+"te adoro ❤️❤️",
+"me haces feliiiiz 🫶",
+"muchísimo ❤️",
+"eres mi persona favorita ❤️",
+"eres la luz que ilumina mi camino 💫",
+"te amoooooooo ❤️",
+"mientras viva, nunca dejaré de pensar en ti",
+"no necesito nada más cuando estás cerca 💗",
+"eres la constelación que guía mis noches",
+"te amoooooooooooo ❤️",
+"ni la eternidad sería suficiente si no pudiera compartirla contigo ❤️"
+
+];
+
+for(let i=0;i<120;i++){
+
+    let estrella =
+    document.createElement("div");
+
+    estrella.classList.add("estrella");
+
+    estrella.innerHTML="✦";
+
+    estrella.style.left=
+    Math.random()*100+"vw";
+
+    estrella.style.top=
+    Math.random()*100+"vh";
+
+    estrella.style.fontSize=
+    (Math.random()*14+8)+"px";
+
+    estrella.style.animationDelay =
+    Math.random()*3 + "s";
+
+    let mensaje =
+    mensajes[
+    Math.floor(
+    Math.random()*mensajes.length
+    )
+    ];
+
+    estrella.addEventListener("mouseenter",(e)=>{
+
+        let caja =
+        document.getElementById(
+        "mensajeEstrella"
+        );
+
+        caja.innerHTML=mensaje;
+
+        caja.style.display="block";
+
+        caja.style.left=
+        e.pageX+15+"px";
+
+        caja.style.top=
+        e.pageY+15+"px";
+
+    });
+
+    estrella.addEventListener("mouseleave",()=>{
+
+        document.getElementById(
+        "mensajeEstrella"
+        ).style.display="none";
+
+    });
+
+    document.body.appendChild(
+    estrella
+    );
+
+}
+
+const textoCompleto = `
+
+Quiero que cuando mires al cielo cuentes cada estrella que puedas ver, porque cada una de ellas es un te amo.
+incluso si intentaras contar todos mis te amo, te quedarías mirando al cielo toooooooda una noche 🌃
+`;
+
+function abrirSecreto(){
+
+    document.getElementById(
+    "secreto"
+    ).style.display="flex";
+
+    escribirTexto();
+
+}
+
+function escribirTexto(){
+
+    let i = 0;
+
+    let texto =
+    document.getElementById(
+    "texto"
+    );
+
+    texto.innerHTML="";
+
+    let intervalo =
+    setInterval(()=>{
+
+        texto.innerHTML +=
+        textoCompleto.charAt(i);
+
+        i++;
+
+        if(i >= textoCompleto.length){
+
+            clearInterval(intervalo);
+
+        }
+
+    },50);
+
+}
+
+</script>
+
+</body>
+</html>
